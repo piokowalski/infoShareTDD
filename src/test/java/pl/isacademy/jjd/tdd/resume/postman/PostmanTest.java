@@ -3,6 +3,10 @@ package pl.isacademy.jjd.tdd.resume.postman;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -12,11 +16,16 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+
+@ExtendWith(MockitoExtension.class)
 class PostmanTest {
 
+    @Mock
     private PostOffice postOffice;
-
+    @InjectMocks
     private Postman sut = new Postman();
 
     @Test
@@ -68,6 +77,7 @@ class PostmanTest {
         AssertionsForInterfaceTypes.assertThat(sut.getPostBag()).isEmpty();
     }
 
+
     @Test
     @DisplayName("begin new day")
     void shouldTakeLettersFromPostOfficeOnceADayStart() {
@@ -75,10 +85,10 @@ class PostmanTest {
         Set<Letter> fakePostBag = generateFakePostBag();
 
         // when
-        // TODO implement
+        sut.beginNewDay();
 
         // then
-        fail("Not yet implemented");
+        verify(postOffice, times(1)).preparePostBag();
 
     }
 
@@ -96,6 +106,7 @@ class PostmanTest {
     }
 
     private Address generateTestAddress(String direction) {
-        return new Address("test" + direction + "City", "test" + direction + "Street", "15", "5");
+        return new Address("test" + direction + "City", "test"
+                + direction + "Street", "15", "5");
     }
 }

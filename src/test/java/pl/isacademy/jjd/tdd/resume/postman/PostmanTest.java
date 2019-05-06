@@ -16,8 +16,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -83,12 +82,15 @@ class PostmanTest {
     void shouldTakeLettersFromPostOfficeOnceADayStart() {
         // given
         Set<Letter> fakePostBag = generateFakePostBag();
+        when(postOffice.preparePostBag()).thenReturn(fakePostBag);
 
         // when
         sut.beginNewDay();
 
         // then
         verify(postOffice, times(1)).preparePostBag();
+        assertThat(sut.getPostBag()).hasSameSizeAs(fakePostBag);
+        assertThat(sut.getPostBag()).containsOnlyElementsOf(fakePostBag);
 
     }
 

@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class PostOffice {
 
-    Set<Letter> preparePostBag() {
+    Set<Letter> preparePostBag()     {
         throw new RuntimeException("Post Office doors closed!");
     }
 }

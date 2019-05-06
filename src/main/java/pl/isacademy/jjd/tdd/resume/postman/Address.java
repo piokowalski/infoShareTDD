@@ -10,6 +10,7 @@ public class Address {
 
     private String flatNumber;
 
+
     public Address(String city, String street, String houseNumber, String flatNumber) {
         this.city = city;
         this.street = street;
